@@ -1,0 +1,22 @@
+[
+    {
+     "_id":1,
+      "title": "table",
+      "img": "https://i.ibb.co/LZtmFqT/table1.jpg"
+    },
+    {
+     "_id":2,
+      "title": "chair",
+      "img": "https://i.ibb.co/C0BVtzc/chair.jpg"
+    },
+    {
+     "_id":3,
+      "title": "sofa",
+      "img": "https://i.ibb.co/3MkBRc6/sofa1.jpg"
+    },
+    {
+     "_id":4,
+      "title": "bed",
+      "img": "https://i.ibb.co/gwjYKW8/bed1.jpg"
+    }
+  ]
