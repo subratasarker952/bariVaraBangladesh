@@ -51,8 +51,8 @@ const AddEditListingPage = () => {
     // } else {
     //   alert("Failed to create property");
     // }
-    console.log(formData)
   };
+  console.log(property)
 
   return (
     <div className="max-w-4xl mx-auto py-8">
@@ -120,7 +120,7 @@ const AddEditListingPage = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 w-full py-2 rounded"
         >
           Submit
         </button>
