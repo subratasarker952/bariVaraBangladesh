@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+import {
+  divisionsData,
+  districtsData,
+  upaZilasData,
+  postOfficesData,
+} from "../../../../public/bangladeshAddress";
 
 const AddEditListingPage = () => {
   const { user } = useAuth();
@@ -7,11 +13,92 @@ const AddEditListingPage = () => {
     title: "",
     description: "",
     price: "",
-    location: "",
+    division: "",
+    district: "",
+    upazila: "",
+    postOffice: "",
+    state: "",
     images: [],
     amenities: "",
     owner: user?.email || "",
   });
+  const [divisions, setDivisions] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [postOffices, setPostOffices] = useState([]);
+
+  const [selectedDivision, setSelectedDivision] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedUpazila, setSelectedUpazila] = useState("");
+  const [selectedPostOffice, setSelectedPostOffice] = useState("");
+
+  useEffect(() => {
+    setDivisions(divisionsData);
+    setDistricts(districtsData);
+    setUpazilas(upaZilasData);
+    setPostOffices(postOfficesData);
+  }, [divisions, districts, upazilas, postOffices]);
+
+  const handleDivisionChange = (event) => {
+    const divisionId = event.target.value;
+    setSelectedDivision(divisionId);
+    const division = divisions.find((division) => division.id == divisionId);
+    const filteredDistricts = districts.filter(
+      (district) => district.division_id === divisionId
+    );
+    setDistricts(filteredDistricts);
+
+    setSelectedDistrict("");
+    setSelectedUpazila("");
+    setSelectedPostOffice("");
+    setUpazilas([]);
+    setPostOffices([]);
+
+    setProperty({
+      ...property,
+      division: division.name,
+    });
+  };
+
+  const handleDistrictChange = (event) => {
+    const districtId = event.target.value;
+    setSelectedDistrict(districtId);
+
+    const district = districts.find((district) => district.id == districtId);
+    const filteredUpazilas = upazilas.filter(
+      (upazila) => upazila.district_id === districtId
+    );
+    setUpazilas(filteredUpazilas);
+
+    setSelectedUpazila("");
+    setSelectedPostOffice("");
+    setPostOffices([]);
+    setProperty({
+      ...property,
+      district: district.name,
+    });
+  };
+
+  const handleUpazilaChange = (event) => {
+    const upazilaName = event.target.value;
+    setSelectedUpazila(upazilaName);
+
+    const filteredPostOffices = postOffices.filter(
+      (postOffice) =>
+        postOffice.district_id === selectedDistrict &&
+        postOffice.division_id === selectedDivision
+    );
+    setPostOffices(filteredPostOffices);
+
+    setSelectedPostOffice("");
+
+    setProperty({ ...property, upazila: upazilaName });
+  };
+
+  const handlePostOfficeChange = (event) => {
+    setSelectedPostOffice(event.target.value);
+    setProperty({ ...property, postOffice: event.target.value });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +122,10 @@ const AddEditListingPage = () => {
     formData.append("title", property.title);
     formData.append("description", property.description);
     formData.append("price", property.price);
-    formData.append("location", property.location);
+    formData.append("division", property.division);
+    formData.append("district", property.district);
+    formData.append("upazila", property.upazila);
+    formData.append("postOffice", property.postOffice);
     formData.append("amenities", property.amenities);
     formData.append("owner", property.owner);
     property.images.forEach((image, i) => {
@@ -52,7 +142,7 @@ const AddEditListingPage = () => {
     //   alert("Failed to create property");
     // }
   };
-  console.log(property)
+  console.log(property);
 
   return (
     <div className="max-w-4xl mx-auto py-8">
@@ -87,16 +177,97 @@ const AddEditListingPage = () => {
             className="p-2 border rounded w-full"
           />
         </div>
+        <div className="flex justify-between">
+          <div className="mb-4">
+            <label className="block text-gray-700">Division</label>
+            <select
+              className="p-2 border rounded w-[200px]"
+              name="division"
+              onChange={handleDivisionChange}
+              value={selectedDivision}
+            >
+              <option value="">Select Division</option>
+              {divisions.map((division) => (
+                <option key={division.id} value={division.id}>
+                  {division.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">District</label>
+            <select
+              className="p-2 border rounded w-[200px]"
+              onChange={handleDistrictChange}
+              value={selectedDistrict}
+            >
+              <option value="">Select District</option>
+              {districts
+                .filter((district) => district.division_id === selectedDivision)
+                .map((district) => (
+                  <option key={district.id} value={district.id}>
+                    {district.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </div>
+        <div className="flex justify-between gap-4">
+          <div className="mb-4">
+            <label className="block text-gray-700">Upazila</label>
+            <select
+              className="p-2 border rounded w-[200px]"
+              onChange={handleUpazilaChange}
+              value={selectedUpazila}
+            >
+              <option value="">Select Upazila</option>
+              {upazilas
+                .filter((upazila) => upazila.district_id === selectedDistrict)
+                .map((upazila) => (
+                  <option key={upazila.id} value={upazila.name}>
+                    {upazila.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700">Post Office</label>
+
+            <select
+              className="p-2 border rounded w-[200px]"
+              onChange={handlePostOfficeChange}
+              value={selectedPostOffice}
+            >
+              <option value="">Select Post Office</option>
+              {postOffices
+                .filter(
+                  (postOffice) =>
+                    postOffice.district_id === selectedDistrict &&
+                    postOffice.division_id === selectedDivision
+                )
+                .map((postOffice) => (
+                  <option
+                    key={postOffice.postOffice}
+                    value={postOffice.postOffice}
+                  >
+                    {postOffice.postOffice}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Location</label>
+          <label className="block text-gray-700">State</label>
           <input
             type="text"
-            name="location"
-            value={property.location}
+            name="state"
+            value={property.state}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700">Images</label>
           <input

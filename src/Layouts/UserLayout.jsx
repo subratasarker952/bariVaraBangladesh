@@ -20,9 +20,9 @@ const UserLayout = () => {
       </NavLink>
       <NavLink
         className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="addProduct"
+        to="addProperty"
       >
-        Add Product
+        Add Property
       </NavLink>
       <NavLink
         className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
