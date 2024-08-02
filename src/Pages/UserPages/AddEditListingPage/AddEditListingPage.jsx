@@ -177,84 +177,88 @@ const AddEditListingPage = () => {
             className="p-2 border rounded w-full"
           />
         </div>
-        <div className="flex justify-between">
-          <div className="mb-4">
-            <label className="block text-gray-700">Division</label>
-            <select
-              className="p-2 border rounded w-[200px]"
-              name="division"
-              onChange={handleDivisionChange}
-              value={selectedDivision}
-            >
-              <option value="">Select Division</option>
-              {divisions.map((division) => (
-                <option key={division.id} value={division.id}>
-                  {division.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">District</label>
-            <select
-              className="p-2 border rounded w-[200px]"
-              onChange={handleDistrictChange}
-              value={selectedDistrict}
-            >
-              <option value="">Select District</option>
-              {districts
-                .filter((district) => district.division_id === selectedDivision)
-                .map((district) => (
-                  <option key={district.id} value={district.id}>
-                    {district.name}
+        <div>
+          <div className="flex justify-between gap-4">
+            <div className="mb-4">
+              <label className="block text-gray-700">Division</label>
+              <select
+                className="p-2 border rounded w-[200px]"
+                name="division"
+                onChange={handleDivisionChange}
+                value={selectedDivision}
+              >
+                <option value="">Select Division</option>
+                {divisions.map((division) => (
+                  <option key={division.id} value={division.id}>
+                    {division.name}
                   </option>
                 ))}
-            </select>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700">District</label>
+              <select
+                className="p-2 border rounded w-[200px]"
+                onChange={handleDistrictChange}
+                value={selectedDistrict}
+              >
+                <option value="">Select District</option>
+                {districts
+                  .filter(
+                    (district) => district.division_id === selectedDivision
+                  )
+                  .map((district) => (
+                    <option key={district.id} value={district.id}>
+                      {district.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="flex justify-between gap-4">
-          <div className="mb-4">
-            <label className="block text-gray-700">Upazila</label>
-            <select
-              className="p-2 border rounded w-[200px]"
-              onChange={handleUpazilaChange}
-              value={selectedUpazila}
-            >
-              <option value="">Select Upazila</option>
-              {upazilas
-                .filter((upazila) => upazila.district_id === selectedDistrict)
-                .map((upazila) => (
-                  <option key={upazila.id} value={upazila.name}>
-                    {upazila.name}
-                  </option>
-                ))}
-            </select>
-          </div>
+          <div className="flex justify-between gap-4">
+            <div className="mb-4">
+              <label className="block text-gray-700">Upazila</label>
+              <select
+                className="p-2 border rounded w-[200px]"
+                onChange={handleUpazilaChange}
+                value={selectedUpazila}
+              >
+                <option value="">Select Upazila</option>
+                {upazilas
+                  .filter((upazila) => upazila.district_id === selectedDistrict)
+                  .map((upazila) => (
+                    <option key={upazila.id} value={upazila.name}>
+                      {upazila.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700">Post Office</label>
+            <div className="mb-4">
+              <label className="block text-gray-700">Post Office</label>
 
-            <select
-              className="p-2 border rounded w-[200px]"
-              onChange={handlePostOfficeChange}
-              value={selectedPostOffice}
-            >
-              <option value="">Select Post Office</option>
-              {postOffices
-                .filter(
-                  (postOffice) =>
-                    postOffice.district_id === selectedDistrict &&
-                    postOffice.division_id === selectedDivision
-                )
-                .map((postOffice) => (
-                  <option
-                    key={postOffice.postOffice}
-                    value={postOffice.postOffice}
-                  >
-                    {postOffice.postOffice}
-                  </option>
-                ))}
-            </select>
+              <select
+                className="p-2 border rounded w-[200px]"
+                onChange={handlePostOfficeChange}
+                value={selectedPostOffice}
+              >
+                <option value="">Select Post Office</option>
+                {postOffices
+                  .filter(
+                    (postOffice) =>
+                      postOffice.district_id === selectedDistrict &&
+                      postOffice.division_id === selectedDivision
+                  )
+                  .map((postOffice) => (
+                    <option
+                      key={postOffice.postOffice}
+                      value={postOffice.postOffice}
+                    >
+                      {postOffice.postOffice}
+                    </option>
+                  ))}
+              </select>
+            </div>
           </div>
         </div>
         <div className="mb-4">
