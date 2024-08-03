@@ -6,6 +6,7 @@ import {
   upaZilasData,
   postOfficesData,
 } from "../../../../public/bangladeshAddress";
+import { houseRentalTypes } from "../../../../public/RentalTypes";
 
 const AddEditListingPage = () => {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ const AddEditListingPage = () => {
     upazila: "",
     postOffice: "",
     state: "",
+    type: "",
     images: [],
     amenities: "",
     owner: user?.email || "",
@@ -177,6 +179,51 @@ const AddEditListingPage = () => {
             className="p-2 border rounded w-full"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Images (Maximum 5 images)</label>
+          <input
+            type="file"
+            multiple
+            
+            max={5}
+            onChange={handleImageChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">
+            Amenities (comma separated)
+          </label>
+          <input
+            type="text"
+            name="amenities"
+            value={property.amenities}
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="font-bold text-gray-700">Type</label>
+          <select
+            className="p-2 border rounded min-w-[150px]"
+            name="type"
+            value={property.type}
+            onChange={handleChange}
+          >
+            <option value="">Select Type</option>
+            {houseRentalTypes.map((rentalType) => (
+              <option
+                key={rentalType.id}
+                value={rentalType.type}
+                title={rentalType.description}
+                className="capitalize"
+              >
+                {rentalType.type}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <div className="flex justify-between gap-4">
             <div className="mb-4">
@@ -267,28 +314,6 @@ const AddEditListingPage = () => {
             type="text"
             name="state"
             value={property.state}
-            onChange={handleChange}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700">Images</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleImageChange}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">
-            Amenities (comma separated)
-          </label>
-          <input
-            type="text"
-            name="amenities"
-            value={property.amenities}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           />

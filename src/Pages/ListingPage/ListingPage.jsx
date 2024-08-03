@@ -6,6 +6,7 @@ import {
   postOfficesData,
   upaZilasData,
 } from "../../../public/bangladeshAddress";
+import { houseRentalTypes } from "../../../public/RentalTypes";
 
 const sampleProperties = [
   {
@@ -120,7 +121,7 @@ const ListingsPage = () => {
       [name]: value,
     });
   };
-  console.log(filters)
+  console.log(filters);
 
   // const fetchProperties = async () => {
   //   try {
@@ -227,8 +228,16 @@ const ListingsPage = () => {
               onChange={handleChange}
             >
               <option value="">Select Type</option>
-              <option value="bachelor">Bachelor</option>
-              <option value="family">Family</option>
+              {houseRentalTypes.map((rentalType) => (
+                <option
+                  key={rentalType.id}
+                  value={rentalType.type}
+                  title={rentalType.description}
+                  className="capitalize"
+                >
+                  {rentalType.type}
+                </option>
+              ))}
             </select>
           </div>
         </div>
