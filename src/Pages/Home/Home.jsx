@@ -1,4 +1,3 @@
-import FeatureItem from "../../Components/HomePageCom/FeatureItem";
 import Features from "../../Components/HomePageCom/Features";
 import Testimonials from "../../Components/HomePageCom/Testimonials";
 
