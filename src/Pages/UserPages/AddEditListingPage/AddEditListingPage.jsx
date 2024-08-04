@@ -158,9 +158,9 @@ const AddEditListingPage = () => {
   console.log(property);
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
+    <div className="max-w-4xl mx-auto  py-8">
       <h2 className="text-3xl font-bold mb-8 text-center">Add New Property</h2>
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md md:w-[500px]">
         <div className="mb-4">
           <label className="block text-gray-700">
             Title <span className="text-red-500">*</span>
@@ -266,13 +266,13 @@ const AddEditListingPage = () => {
           </select>
         </div>
         <div>
-          <div className="flex justify-between gap-4">
+          <div className=" sm:flex justify-between gap-4">
             <div className="mb-4">
               <label className="block text-gray-700">
                 Division <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[150px]"
+                className="p-2 border rounded w-[200px]"
                 name="division"
                 required
                 onChange={handleDivisionChange}
@@ -291,7 +291,7 @@ const AddEditListingPage = () => {
                 District <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[150px]"
+                className="p-2 border rounded w-[200px]"
                 onChange={handleDistrictChange}
                 value={selectedDistrict}
                 required
@@ -309,13 +309,13 @@ const AddEditListingPage = () => {
               </select>
             </div>
           </div>
-          <div className="flex justify-between gap-4">
+          <div className=" sm:flex justify-between gap-4">
             <div className="mb-4">
               <label className="block text-gray-700">
                 Upazila <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[150px]"
+                className="p-2 border rounded w-[200px]"
                 onChange={handleUpazilaChange}
                 value={selectedUpazila}
                 required
@@ -337,7 +337,7 @@ const AddEditListingPage = () => {
               </label>
 
               <select
-                className="p-2 border rounded w-[150px]"
+                className="p-2 border rounded w-[200px]"
                 onChange={handlePostOfficeChange}
                 value={selectedPostOffice}
                 required
@@ -368,6 +368,7 @@ const AddEditListingPage = () => {
           <input
             type="text"
             name="state"
+            placeholder="123 Main Street"
             value={property.state}
             onChange={handleChange}
             required
@@ -381,6 +382,9 @@ const AddEditListingPage = () => {
           <input
             type="tel"
             name="phone"
+            placeholder="01500000000"
+            min={11}
+            max={11}
             value={property.phone}
             required
             onChange={handleChange}
@@ -392,6 +396,9 @@ const AddEditListingPage = () => {
           <input
             type="tel"
             name="whatsApp"
+            placeholder="01500000000"
+            min={11}
+            max={11}
             value={property.whatsApp}
             onChange={handleChange}
             className="p-2 border rounded w-full"
@@ -402,6 +409,7 @@ const AddEditListingPage = () => {
           <input
             type="email "
             name="email"
+            placeholder="example@gmail.com"
             value={property.email}
             onChange={handleChange}
             className="p-2 border rounded w-full"

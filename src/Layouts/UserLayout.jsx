@@ -7,33 +7,33 @@ const UserLayout = () => {
   const menu = (
     <>
       <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
+        className=" capitalize hover:rounded-full px-4 py-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
         to=""
       >
         Dashboard
       </NavLink>
       <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
+        className=" capitalize hover:rounded-full px-4 py-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
         to="profile"
       >
         Profile
       </NavLink>
       <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
+        className=" capitalize hover:rounded-full px-4 py-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
         to="addProperty"
       >
         Add Property
       </NavLink>
 
       <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
+        className=" capitalize hover:rounded-full px-4 py-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
         to="myProperty"
       >
         My Property
       </NavLink>
 
       <button
-        className=" bg-red-500 p-2 rounded-full text-center m-1  active:bg-black text-white "
+        className=" bg-red-500 px-4 py-2 rounded-full text-center m-1  active:bg-black text-white "
         onClick={() => logOutUser()}
       >
         Logout
@@ -47,7 +47,7 @@ const UserLayout = () => {
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
           <div className="w-full navbar bg-base-300">
-            <div className="flex-none lg:hidden">
+            <div className="flex-none lg:hidden bg-white p-2">
               <label
                 htmlFor="my-drawer-3"
                 aria-label="open sidebar"
@@ -68,12 +68,12 @@ const UserLayout = () => {
                 </svg>
               </label>
             </div>
-            <div className="flex-1 text-green-500 text-3xl">
+            <div className="flex-1 text-green-500 text-3xl bg-white  p-3">
               <NavLink className=" capitalize" to="/">
-                BariVara
+                BariVara 
               </NavLink>
             </div>
-            <div className="flex-none hidden lg:block">
+            <div className="flex-none hidden lg:block bg-white">
               <ul className="menu menu-horizontal">{menu}</ul>
               {/* Navbar menu content here */}
             </div>
