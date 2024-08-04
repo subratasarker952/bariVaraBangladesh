@@ -16,6 +16,7 @@ import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
 import Privacy from "../Pages/Privacy/Privacy";
 import MyProperty from "../Pages/UserPages/AddEditListingPage/MyProperty/MyProperty";
+import Terms from "../Pages/terms/Terms";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About/>,
+        element: <About />,
       },
       {
         path: "/contact",
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/privacy",
         element: <Privacy />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
       },
       {
         path: "*",

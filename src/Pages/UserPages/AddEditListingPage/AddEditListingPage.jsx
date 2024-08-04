@@ -272,7 +272,7 @@ const AddEditListingPage = () => {
                 Division <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[200px]"
+                className="p-2 border rounded w-[150px]"
                 name="division"
                 required
                 onChange={handleDivisionChange}
@@ -291,7 +291,7 @@ const AddEditListingPage = () => {
                 District <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[200px]"
+                className="p-2 border rounded w-[150px]"
                 onChange={handleDistrictChange}
                 value={selectedDistrict}
                 required
@@ -315,7 +315,7 @@ const AddEditListingPage = () => {
                 Upazila <span className="text-red-500">*</span>
               </label>
               <select
-                className="p-2 border rounded w-[200px]"
+                className="p-2 border rounded w-[150px]"
                 onChange={handleUpazilaChange}
                 value={selectedUpazila}
                 required
@@ -337,7 +337,7 @@ const AddEditListingPage = () => {
               </label>
 
               <select
-                className="p-2 border rounded w-[200px]"
+                className="p-2 border rounded w-[150px]"
                 onChange={handlePostOfficeChange}
                 value={selectedPostOffice}
                 required

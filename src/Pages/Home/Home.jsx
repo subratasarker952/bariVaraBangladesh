@@ -22,7 +22,6 @@ const Home = () => {
           </button>
         </div>
       </section>
-
       <Testimonials />
       <Features />
     </div>
