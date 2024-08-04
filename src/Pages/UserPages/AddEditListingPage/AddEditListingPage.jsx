@@ -6,7 +6,7 @@ import {
   upaZilasData,
   postOfficesData,
 } from "../../../../public/bangladeshAddress";
-import { houseRentalTypes } from "../../../../public/RentalTypes";
+import { rentalTypes } from "../../../../public/RentalTypes";
 
 const AddEditListingPage = () => {
   const { user } = useAuth();
@@ -22,6 +22,7 @@ const AddEditListingPage = () => {
     type: "",
     images: [],
     amenities: "",
+    condition: "",
     owner: user?.email || "",
   });
   const [divisions, setDivisions] = useState([]);
@@ -129,6 +130,11 @@ const AddEditListingPage = () => {
     formData.append("upazila", property.upazila);
     formData.append("postOffice", property.postOffice);
     formData.append("amenities", property.amenities);
+    formData.append("type", property.type);
+    formData.append("paymentStatus", "due");
+    formData.append("publishStatus", "pending");
+    formData.append("phone", property.phone);
+    formData.append("condition", property.condition);
     formData.append("owner", property.owner);
     property.images.forEach((image, i) => {
       formData.append(`images[${i}]`, image);
@@ -180,11 +186,12 @@ const AddEditListingPage = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Images (Maximum 5 images)</label>
+          <label className="block text-gray-700">
+            Images (Maximum 5 images)
+          </label>
           <input
             type="file"
             multiple
-            
             max={5}
             onChange={handleImageChange}
             className="p-2 border rounded w-full"
@@ -203,15 +210,25 @@ const AddEditListingPage = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="font-bold text-gray-700">Type</label>
+          <label className="block text-gray-700">Condition</label>
+          <input
+            type="text"
+            name="condition"
+            value={property.condition}
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Type</label>
           <select
-            className="p-2 border rounded min-w-[150px]"
+            className="p-2 border rounded w-full block]"
             name="type"
             value={property.type}
             onChange={handleChange}
           >
             <option value="">Select Type</option>
-            {houseRentalTypes.map((rentalType) => (
+            {rentalTypes.map((rentalType) => (
               <option
                 key={rentalType.id}
                 value={rentalType.type}
@@ -223,7 +240,6 @@ const AddEditListingPage = () => {
             ))}
           </select>
         </div>
-
         <div>
           <div className="flex justify-between gap-4">
             <div className="mb-4">
