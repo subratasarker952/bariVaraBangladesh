@@ -15,6 +15,7 @@ import AddEditListingPage from "../Pages/UserPages/AddEditListingPage/AddEditLis
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
 import Privacy from "../Pages/Privacy/Privacy";
+import MyProperty from "../Pages/UserPages/AddEditListingPage/MyProperty/MyProperty";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
       {
         path: "editProperty/:id",
         element: <AddEditListingPage />,
+      },
+      {
+        path: "myProperty",
+        element: <MyProperty />,
       },
       {
         path: "*",

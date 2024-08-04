@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
 
-const MyProperty = ({ user }) => {
+const MyProperty = () => {
+  const { user } = useAuth();
   const [properties, setProperties] = useState([]);
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await axios.get(`/api/properties?owner=${user.email}`);
-        setProperties(response.data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProperties = async () => {
+  //     try {
+  //       const response = await axios.get(`/api/properties?owner=${user.email}`);
+  //       setProperties(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching properties:", error);
+  //     }
+  //   };
 
-    fetchProperties();
-  }, [user.email]);
+  //   fetchProperties();
+  // }, [user.email]);
 
   const handleEdit = (id) => {
     console.log("Edit Button Click" + id);
@@ -35,6 +37,7 @@ const MyProperty = ({ user }) => {
       <table className="min-w-full bg-white">
         <thead>
           <tr>
+            <th className="py-2 px-4 border-b">SL</th>
             <th className="py-2 px-4 border-b">Title</th>
             <th className="py-2 px-4 border-b">Type</th>
             <th className="py-2 px-4 border-b">Payment Status</th>
@@ -43,8 +46,9 @@ const MyProperty = ({ user }) => {
           </tr>
         </thead>
         <tbody>
-          {properties.map((property) => (
+          {properties.map((property, index) => (
             <tr key={property._id}>
+              <td className="py-2 px-4 border-b">{index+1}</td>
               <td className="py-2 px-4 border-b">{property.title}</td>
               <td className="py-2 px-4 border-b">{property.type}</td>
               <td className="py-2 px-4 border-b">{property.paymentStatus}</td>

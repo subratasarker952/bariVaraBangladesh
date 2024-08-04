@@ -27,7 +27,7 @@ const UserLayout = () => {
 
       <NavLink
         className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="myProducts"
+        to="myProperty"
       >
         My Property
       </NavLink>
