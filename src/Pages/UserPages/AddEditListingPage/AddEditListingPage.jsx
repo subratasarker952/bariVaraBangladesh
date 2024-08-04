@@ -6,7 +6,7 @@ import {
   upaZilasData,
   postOfficesData,
 } from "../../../../public/bangladeshAddress";
-import { houseRentalTypes } from "../../../../public/RentalTypes";
+import { rentalTypes } from "../../../../public/RentalTypes";
 
 const AddEditListingPage = () => {
   const { user } = useAuth();
@@ -19,9 +19,13 @@ const AddEditListingPage = () => {
     upazila: "",
     postOffice: "",
     state: "",
+    phone: "",
+    whatsApp: "",
     type: "",
     images: [],
     amenities: "",
+    condition: "",
+    email: "",
     owner: user?.email || "",
   });
   const [divisions, setDivisions] = useState([]);
@@ -129,6 +133,13 @@ const AddEditListingPage = () => {
     formData.append("upazila", property.upazila);
     formData.append("postOffice", property.postOffice);
     formData.append("amenities", property.amenities);
+    formData.append("type", property.type);
+    formData.append("paymentStatus", "due");
+    formData.append("publishStatus", "pending");
+    formData.append("phone", property.phone);
+    formData.append("whatsApp", property.whatsApp);
+    formData.append("email", property.email);
+    formData.append("condition", property.condition);
     formData.append("owner", property.owner);
     property.images.forEach((image, i) => {
       formData.append(`images[${i}]`, image);
@@ -148,70 +159,101 @@ const AddEditListingPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-8">Add New Property</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center">Add New Property</h2>
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md">
         <div className="mb-4">
-          <label className="block text-gray-700">Title</label>
+          <label className="block text-gray-700">
+            Title <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
             name="title"
+            placeholder=" House / Office / Room / Family / Bachelor"
+            required
             value={property.title}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Description</label>
+          <label className="block text-gray-700">
+            Description <span className="text-red-500">*</span>
+          </label>
           <textarea
             name="description"
+            required
+            placeholder="This beautiful house has 3 bedrooms, 2 bathrooms, a spacious living room, and a modern kitchen. It is located in a quiet neighborhood and is perfect for a family. The house also includes a garage and a large backyard."
             value={property.description}
+            rows={4}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           ></textarea>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Price ($/month)</label>
+          <label className="block text-gray-700">
+            Price (BDT/month) <span className="text-red-500">*</span>
+          </label>
           <input
             type="number"
             name="price"
+            required
+            placeholder="2000"
             value={property.price}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Images (Maximum 5 images)</label>
+          <label className="block text-gray-700">
+            Images (Maximum 6 images)
+          </label>
           <input
             type="file"
             multiple
-            
-            max={5}
             onChange={handleImageChange}
             className="p-2 border rounded w-full"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">
-            Amenities (comma separated)
+            Amenities (comma separated) <span className="text-red-500">*</span>
           </label>
-          <input
+
+          <textarea
             type="text"
+            required
+            rows={4}
             name="amenities"
             value={property.amenities}
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+            placeholder="3 bedrooms, 2 bathrooms, 1 kitchen, 1 diningRoom"
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Condition </label>
+          <input
+            type="text"
+            name="condition"
+            placeholder="Rent For A month"
+            value={property.condition}
             onChange={handleChange}
             className="p-2 border rounded w-full"
           />
         </div>
         <div className="mb-4">
-          <label className="font-bold text-gray-700">Type</label>
+          <label className="block text-gray-700">
+            Type <span className="text-red-500">*</span>
+          </label>
           <select
-            className="p-2 border rounded min-w-[150px]"
+            className="p-2 border rounded w-full block]"
             name="type"
             value={property.type}
+            required
             onChange={handleChange}
           >
             <option value="">Select Type</option>
-            {houseRentalTypes.map((rentalType) => (
+            {rentalTypes.map((rentalType) => (
               <option
                 key={rentalType.id}
                 value={rentalType.type}
@@ -223,14 +265,16 @@ const AddEditListingPage = () => {
             ))}
           </select>
         </div>
-
         <div>
           <div className="flex justify-between gap-4">
             <div className="mb-4">
-              <label className="block text-gray-700">Division</label>
+              <label className="block text-gray-700">
+                Division <span className="text-red-500">*</span>
+              </label>
               <select
                 className="p-2 border rounded w-[200px]"
                 name="division"
+                required
                 onChange={handleDivisionChange}
                 value={selectedDivision}
               >
@@ -243,11 +287,14 @@ const AddEditListingPage = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700">District</label>
+              <label className="block text-gray-700">
+                District <span className="text-red-500">*</span>
+              </label>
               <select
                 className="p-2 border rounded w-[200px]"
                 onChange={handleDistrictChange}
                 value={selectedDistrict}
+                required
               >
                 <option value="">Select District</option>
                 {districts
@@ -264,11 +311,14 @@ const AddEditListingPage = () => {
           </div>
           <div className="flex justify-between gap-4">
             <div className="mb-4">
-              <label className="block text-gray-700">Upazila</label>
+              <label className="block text-gray-700">
+                Upazila <span className="text-red-500">*</span>
+              </label>
               <select
                 className="p-2 border rounded w-[200px]"
                 onChange={handleUpazilaChange}
                 value={selectedUpazila}
+                required
               >
                 <option value="">Select Upazila</option>
                 {upazilas
@@ -282,14 +332,17 @@ const AddEditListingPage = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700">Post Office</label>
+              <label className="block text-gray-700">
+                Post Office <span className="text-red-500">*</span>
+              </label>
 
               <select
                 className="p-2 border rounded w-[200px]"
                 onChange={handlePostOfficeChange}
                 value={selectedPostOffice}
+                required
               >
-                <option value="">Select Post Office</option>
+                <option value="">Select Post Office </option>
                 {postOffices
                   .filter(
                     (postOffice) =>
@@ -309,15 +362,52 @@ const AddEditListingPage = () => {
           </div>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">State</label>
+          <label className="block text-gray-700">
+            State <span className="text-red-500">*</span>{" "}
+          </label>
           <input
             type="text"
             name="state"
             value={property.state}
             onChange={handleChange}
+            required
             className="p-2 border rounded w-full"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">
+            Phone <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            value={property.phone}
+            required
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Whats app</label>
+          <input
+            type="tel"
+            name="whatsApp"
+            value={property.whatsApp}
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700">Email</label>
+          <input
+            type="email "
+            name="email"
+            value={property.email}
+            onChange={handleChange}
+            className="p-2 border rounded w-full"
+          />
+        </div>
+
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 w-full py-2 rounded"
