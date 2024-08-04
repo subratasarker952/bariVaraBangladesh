@@ -7,6 +7,7 @@ import {
   upaZilasData,
 } from "../../../public/bangladeshAddress";
 import { rentalTypes } from "../../../public/RentalTypes";
+import axios from "axios";
 
 const sampleProperties = [
   {
@@ -29,6 +30,7 @@ const sampleProperties = [
 ];
 
 const ListingsPage = () => {
+  const [properties, setProperties] = useState([]);
   const [filters, setFilters] = useState({
     division: "",
     district: "",
@@ -36,6 +38,7 @@ const ListingsPage = () => {
     postOffice: "",
     type: "",
   });
+
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
@@ -131,7 +134,18 @@ const ListingsPage = () => {
     } else if (!upazila) {
       alert("Select A Upazila Please");
     } else {
-      console.log(filters);
+      const fetchProperties = async () => {
+        try {
+          // todo address link
+          const response = await axios.get("", {
+            params: filters,
+          });
+          setProperties(response.data);
+        } catch (error) {
+          console.error("Error fetching properties:", error);
+        }
+      };
+      fetchProperties();
     }
   };
 
@@ -268,6 +282,7 @@ const ListingsPage = () => {
       </div>
 
       <section className="py-8">
+        <h2 className="text-5xl text-center">{properties.length}</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-3 gap-8">
           {sampleProperties.map((property) => (
             <PropertyCard key={property.id} property={property} />

@@ -10,7 +10,7 @@ const useProperty = () => {
     const fetchProperties = async () => {
       try {
         const response = await axios.get(
-          `/api/properties?owner=${user?.email}`
+          `?owner=${user?.email}`
         );
         setProperty(response.data);
       } catch (error) {
