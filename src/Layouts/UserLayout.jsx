@@ -24,36 +24,14 @@ const UserLayout = () => {
       >
         Add Property
       </NavLink>
-      <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="createBlog"
-      >
-        Add Blog
-      </NavLink>
-      <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="createReview"
-      >
-        Add Review
-      </NavLink>
+
       <NavLink
         className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
         to="myProducts"
       >
-        My Products
+        My Property
       </NavLink>
-      <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="blogs"
-      >
-        My Blogs
-      </NavLink>
-      <NavLink
-        className=" capitalize hover:rounded-full p-2 text-center m-1 hover:bg-green-500 active:bg-black  hover:text-white"
-        to="myReviews"
-      >
-        My Review
-      </NavLink>
+
       <button
         className=" bg-red-500 p-2 rounded-full text-center m-1  active:bg-black text-white "
         onClick={() => logOutUser()}
@@ -91,11 +69,8 @@ const UserLayout = () => {
               </label>
             </div>
             <div className="flex-1 text-green-500 text-3xl">
-              <NavLink
-                className=" capitalize"
-                to="/"
-              >
-                DF
+              <NavLink className=" capitalize" to="/">
+                BariVara
               </NavLink>
             </div>
             <div className="flex-none hidden lg:block">

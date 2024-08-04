@@ -12,6 +12,9 @@ import EditProfile from "../Pages/UserPages/Profile/EditProfile";
 import ListingsPage from "../Pages/ListingPage/ListingPage";
 import SinglePropertyPage from "../Components/HomePageCom/SinglePropertyPage";
 import AddEditListingPage from "../Pages/UserPages/AddEditListingPage/AddEditListingPage";
+import About from "../Pages/About/About";
+import Contact from "../Pages/Contact/Contact";
+import Privacy from "../Pages/Privacy/Privacy";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +40,18 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/about",
+        element: <About/>,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/privacy",
+        element: <Privacy />,
       },
       {
         path: "*",
@@ -71,6 +86,14 @@ const router = createBrowserRouter([
       },
       {
         path: "addProperty",
+        element: <AddEditListingPage />,
+      },
+      {
+        path: "editProperty",
+        element: <AddEditListingPage />,
+      },
+      {
+        path: "editProperty/:id",
         element: <AddEditListingPage />,
       },
       {

@@ -17,7 +17,7 @@ const DashboardHome = () => {
   return (
     <div className="">
       <div className="my-10 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3">
           <div className="h-[200px] rounded-lg p-5 shadow-xl bg-white text-3xl flex justify-between items-center w-full">
             <p className="text-center"> Total BLog:- {states.blogs || 0}</p>
           </div>

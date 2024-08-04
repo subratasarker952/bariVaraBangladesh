@@ -1,3 +1,4 @@
+import FeatureItem from "../../Components/HomePageCom/FeatureItem";
 import Testimonials from "../../Components/HomePageCom/Testimonials";
 
 const Home = () => {
@@ -23,14 +24,7 @@ const Home = () => {
       </section>
 
       <Testimonials />
-      <section className="bg-gray-100 py-20">
-        <h2 className="text-3xl text-center font-bold mb-8">
-          What Our Customers Say
-        </h2>
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Testimonial items */}
-        </div>
-      </section>
+      <FeatureItem />
     </div>
   );
 };
