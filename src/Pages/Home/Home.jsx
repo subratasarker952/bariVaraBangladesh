@@ -1,3 +1,5 @@
+import Testimonials from "../../Components/HomePageCom/Testimonials";
+
 const Home = () => {
   return (
     <div className="text-center">
@@ -19,14 +21,8 @@ const Home = () => {
           </button>
         </div>
       </section>
-      <section className="py-20">
-        <h2 className="text-3xl text-center font-bold mb-8">
-          Featured Listings
-        </h2>
-        <div className="grid grid-cols-3 gap-8">
-          {/* PropertyCard component will be used here */}
-        </div>
-      </section>
+
+      <Testimonials />
       <section className="bg-gray-100 py-20">
         <h2 className="text-3xl text-center font-bold mb-8">
           What Our Customers Say
