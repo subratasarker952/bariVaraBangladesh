@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 const DashboardHome = () => {
   const [states, setStates] = useState({});
+
   useEffect(() => {
-    fetch(`https://digitalfurnitureserver.vercel.app/states`, {
+    fetch(`http://localhost:3000/states`, {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -14,15 +15,16 @@ const DashboardHome = () => {
       .then((json) => setStates(json));
   }, [states]);
 
+
   return (
     <div className="">
       <div className="my-10 p-6 ">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
           <div className="h-[200px] rounded-lg p-5 shadow-xl bg-white text-3xl w-full flex justify-center items-center">
-            <p className=""> Total Property:- {states.blogs || 0}</p>
+            <p className=""> Total Property:- {states.properties || 0}</p>
           </div>
           <div className="h-[200px] rounded-lg p-5 shadow-xl bg-white text-3xl w-full flex justify-center items-center">
-            <p className=""> Your Property:- {states.users || 0}</p>
+            <p className="">Total Users:- {states.users || 0}</p>
           </div>
           <div className="h-[200px] rounded-lg p-5 shadow-xl bg-white text-3xl w-full flex justify-center items-center">
             <p className="">

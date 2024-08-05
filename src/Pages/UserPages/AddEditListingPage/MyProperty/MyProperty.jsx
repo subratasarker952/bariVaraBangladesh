@@ -9,8 +9,15 @@ const MyProperty = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        // const response = await axios.get(`/api/properties?owner=${user?.email}`);
-        // setProperties(response.data);
+        const response = await axios.get(
+          `http://localhost:3000/properties/email?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `barer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setProperties(response.data);
       } catch (error) {
         console.error("Error fetching properties:", error);
       }
@@ -47,12 +54,12 @@ const MyProperty = () => {
         </thead>
         <tbody>
           {properties?.map((property, index) => (
-            <tr key={property._id}>
-              <td className="py-2 px-4 border-b">{index+1}</td>
+            <tr key={property._id} className="text-center capitalize">
+              <td className="py-2 px-4 border-b">{index + 1}</td>
               <td className="py-2 px-4 border-b">{property.title}</td>
               <td className="py-2 px-4 border-b">{property.type}</td>
               <td className="py-2 px-4 border-b">{property.paymentStatus}</td>
-              <td className="py-2 px-4 border-b">{property.publicStatus}</td>
+              <td className="py-2 px-4 border-b">{property.publishStatus}</td>
               <td className="py-2 px-4 border-b">
                 <button
                   onClick={() => handleEdit(property._id)}

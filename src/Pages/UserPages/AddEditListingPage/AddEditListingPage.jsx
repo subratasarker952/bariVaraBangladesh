@@ -7,6 +7,7 @@ import {
   postOfficesData,
 } from "../../../../public/bangladeshAddress";
 import { rentalTypes } from "../../../../public/RentalTypes";
+import axios from "axios";
 
 const AddEditListingPage = () => {
   const { user } = useAuth();
@@ -22,10 +23,12 @@ const AddEditListingPage = () => {
     phone: "",
     whatsApp: "",
     type: "",
-    images: [],
+    image: "",
     amenities: "",
     condition: "",
     email: "",
+    paymentStatus: "due",
+    publishStatus: "hide",
     owner: user?.email || "",
   });
   const [divisions, setDivisions] = useState([]);
@@ -118,7 +121,7 @@ const AddEditListingPage = () => {
     const files = Array.from(e.target.files);
     setProperty({
       ...property,
-      images: files,
+      image: files[0],
     });
   };
 
@@ -134,33 +137,46 @@ const AddEditListingPage = () => {
     formData.append("postOffice", property.postOffice);
     formData.append("amenities", property.amenities);
     formData.append("type", property.type);
-    formData.append("paymentStatus", "due");
-    formData.append("publishStatus", "pending");
+    formData.append("paymentStatus", property.paymentStatus);
+    formData.append("publishStatus", property.publishStatus);
     formData.append("phone", property.phone);
     formData.append("whatsApp", property.whatsApp);
     formData.append("email", property.email);
     formData.append("condition", property.condition);
     formData.append("owner", property.owner);
-    property.images.forEach((image, i) => {
-      formData.append(`images[${i}]`, image);
-    });
+    formData.append("state", property.state);
+    // formData.append("image", property.image);
 
-    // const response = await fetch("/api/properties", {
-    //   method: "POST",
-    //   body: formData,
-    // });
-    // if (response.ok) {
-    //   alert("Property created successfully");
-    // } else {
-    //   alert("Failed to create property");
-    // }
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/properties",
+        formData,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Property created successfully");
+      } else {
+        alert("Failed to create property");
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+      alert("Failed to create property");
+    }
   };
-  console.log(property);
 
   return (
     <div className="max-w-4xl mx-auto  py-8">
       <h2 className="text-3xl font-bold mb-8 text-center">Add New Property</h2>
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md md:w-[500px]">
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="bg-white p-8 rounded shadow-md md:w-[500px]"
+      >
         <div className="mb-4">
           <label className="block text-gray-700">
             Title <span className="text-red-500">*</span>
@@ -209,8 +225,8 @@ const AddEditListingPage = () => {
           </label>
           <input
             type="file"
-            multiple
             onChange={handleImageChange}
+            name="image"
             className="p-2 border rounded w-full"
           />
         </div>

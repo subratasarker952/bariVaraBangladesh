@@ -9,26 +9,6 @@ import {
 import { rentalTypes } from "../../../public/RentalTypes";
 import axios from "axios";
 
-const sampleProperties = [
-  {
-    id: 1,
-    title: "Beautiful 3 Bedroom House",
-    description:
-      "This beautiful house has 3 bedrooms, 2 bathrooms, a spacious living room, and a modern kitchen...",
-    price: 2000,
-    image: "https://via.placeholder.com/400x300",
-  },
-  {
-    id: 2,
-    title: "Cozy 2 Bedroom Apartment",
-    description:
-      "A cozy apartment located in the heart of the city with 2 bedrooms, 1 bathroom, and a balcony...",
-    price: 1500,
-    image: "https://via.placeholder.com/400x300",
-  },
-  // Add more sample properties as needed
-];
-
 const ListingsPage = () => {
   const [properties, setProperties] = useState([]);
   const [filters, setFilters] = useState({
@@ -38,6 +18,22 @@ const ListingsPage = () => {
     postOffice: "",
     type: "",
   });
+
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/properties", {
+        params: filters,
+      });
+      setProperties(response.data);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProperties();
+  }, [filters]);
+
 
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -72,8 +68,11 @@ const ListingsPage = () => {
     setPostOffices([]);
 
     setFilters({
-      ...filters,
-      division: division.name,
+      division: division?.name || "",
+      district: "",
+      upazila: "",
+      postOffice: "",
+      type: "",
     });
   };
 
@@ -92,7 +91,7 @@ const ListingsPage = () => {
     setPostOffices([]);
     setFilters({
       ...filters,
-      district: district.name,
+      district: district?.name || "",
     });
   };
 
@@ -125,166 +124,126 @@ const ListingsPage = () => {
     });
   };
 
-  const handleSearch = () => {
-    const { division, district, upazila } = filters;
-    if (!division) {
-      alert("Select A Division Please");
-    } else if (!district) {
-      alert("Select A District Please");
-    } else if (!upazila) {
-      alert("Select A Upazila Please");
-    } else {
-      const fetchProperties = async () => {
-        try {
-          // todo address link
-          const response = await axios.get("", {
-            params: filters,
-          });
-          setProperties(response.data);
-        } catch (error) {
-          console.error("Error fetching properties:", error);
-        }
-      };
-      fetchProperties();
-    }
-  };
-
-  // const fetchProperties = async () => {
-  //   try {
-  //     const response = await axios.get("/api/properties/search", {
-  //       params: filters,
-  //     });
-  //     setProperties(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching properties:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchProperties();
-  // }, [filters]);
-
   return (
-    <div className=" ">
-      <div className=" ">
-        <div className="flex justify-center items-center p-4">
-          <div className="flex flex-wrap gap-4">
-            <div className="mb-4 flex justify-center items-center gap-2">
-              <label className="font-bold text-gray-700">Division</label>
-              <select
-                className="p-2 border rounded min-w-[150px]"
-                name="division"
-                onChange={handleDivisionChange}
-                value={selectedDivision}
-              >
-                <option value="">Select Division</option>
-                {divisions.map((division) => (
-                  <option key={division.id} value={division.id}>
-                    {division.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-4 flex justify-center items-center gap-2">
-              <label className="font-bold text-gray-700">District</label>
-              <select
-                className="p-2 border rounded min-w-[150px]"
-                onChange={handleDistrictChange}
-                value={selectedDistrict}
-              >
-                <option value="">Select District</option>
-                {districts
-                  .filter(
-                    (district) => district.division_id === selectedDivision
-                  )
-                  .map((district) => (
-                    <option key={district.id} value={district.id}>
-                      {district.name}
+    <div className="flex flex-col justify-between min-h-[700px]">
+      <div className="">
+        <div>
+          <div className="flex justify-center items-center p-4">
+            <div className="flex flex-wrap gap-2">
+              <div className="mb-4 flex justify-center items-center gap-2">
+                <label className="font-bold text-gray-700">Division</label>
+                <select
+                  className="p-2 border rounded min-w-[150px]"
+                  onChange={handleDivisionChange}
+                  value={selectedDivision}
+                  name="division"
+                >
+                  <option value="">All Division</option>
+                  {divisions.map((division) => (
+                    <option key={division.id} value={division.id}>
+                      {division.name}
                     </option>
                   ))}
-              </select>
-            </div>
-            <div className="mb-4 flex justify-center items-center gap-2">
-              <label className="font-bold text-gray-700">Upazila</label>
-              <select
-                className="p-2 border rounded min-w-[150px]"
-                onChange={handleUpazilaChange}
-                value={selectedUpazila}
-              >
-                <option value="">Select Upazila</option>
-                {upazilas
-                  .filter((upazila) => upazila.district_id === selectedDistrict)
-                  .map((upazila) => (
-                    <option key={upazila.id} value={upazila.name}>
-                      {upazila.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
+                </select>
+              </div>
+              <div className="mb-4 flex justify-center items-center gap-2">
+                <label className="font-bold text-gray-700">District</label>
+                <select
+                  className="p-2 border rounded min-w-[150px]"
+                  onChange={handleDistrictChange}
+                  name="district"
+                  value={selectedDistrict}
+                >
+                  <option value="">Select District</option>
+                  {districts
+                    .filter(
+                      (district) => district.division_id === selectedDivision
+                    )
+                    .map((district) => (
+                      <option key={district.id} value={district.id}>
+                        {district.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-4 flex justify-center items-center gap-2">
+                <label className="font-bold text-gray-700">Upazila</label>
+                <select
+                  className="p-2 border rounded min-w-[150px]"
+                  onChange={handleUpazilaChange}
+                  value={selectedUpazila}
+                >
+                  <option value="">Select Upazila</option>
+                  {upazilas
+                    .filter(
+                      (upazila) => upazila.district_id === selectedDistrict
+                    )
+                    .map((upazila) => (
+                      <option key={upazila.id} value={upazila.name}>
+                        {upazila.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
 
-            <div className="mb-4 flex justify-center items-center gap-2">
-              <label className="font-bold text-gray-700">Post Office</label>
+              <div className="mb-4 flex justify-center items-center gap-2">
+                <label className="font-bold text-gray-700">Post Office</label>
 
-              <select
-                className="p-2 border rounded min-w-[150px]"
-                onChange={handlePostOfficeChange}
-                value={selectedPostOffice}
-              >
-                <option value="">Select Post Office</option>
-                {postOffices
-                  .filter(
-                    (postOffice) =>
-                      postOffice.district_id === selectedDistrict &&
-                      postOffice.division_id === selectedDivision
-                  )
-                  .map((postOffice) => (
+                <select
+                  className="p-2 border rounded min-w-[150px]"
+                  onChange={handlePostOfficeChange}
+                  value={selectedPostOffice}
+                >
+                  <option value="">Select Post Office</option>
+                  {postOffices
+                    .filter(
+                      (postOffice) =>
+                        postOffice.district_id === selectedDistrict &&
+                        postOffice.division_id === selectedDivision
+                    )
+                    .map((postOffice) => (
+                      <option
+                        key={postOffice.postOffice}
+                        value={postOffice.postOffice}
+                      >
+                        {postOffice.postOffice}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-4 flex justify-center items-center gap-2">
+                <label className="font-bold text-gray-700">Type</label>
+
+                <select
+                  className="p-2 border rounded min-w-[150px]"
+                  name="type"
+                  value={filters.type}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Type</option>
+                  {rentalTypes.map((rentalType) => (
                     <option
-                      key={postOffice.postOffice}
-                      value={postOffice.postOffice}
+                      key={rentalType.id}
+                      value={rentalType.type}
+                      title={rentalType.description}
+                      className="capitalize"
                     >
-                      {postOffice.postOffice}
+                      {rentalType.type}
                     </option>
                   ))}
-              </select>
-            </div>
-            <div className="mb-4 flex justify-center items-center gap-2">
-              <label className="font-bold text-gray-700">Type</label>
-
-              <select
-                className="p-2 border rounded min-w-[150px]"
-                name="type"
-                value={filters.type}
-                onChange={handleChange}
-              >
-                <option value="">Select Type</option>
-                {rentalTypes.map((rentalType) => (
-                  <option
-                    key={rentalType.id}
-                    value={rentalType.type}
-                    title={rentalType.description}
-                    className="capitalize"
-                  >
-                    {rentalType.type}
-                  </option>
-                ))}
-              </select>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="max-w-md mx-auto">
-          <button
-            onClick={handleSearch}
-            className="bg-blue-500 text-white hover:text-black transition-all duration-300 hover:bg-blue-300 w-full my-2 px-4 py-2 rounded"
-          >
-            Search
-          </button>
+          <h2 className="text-2xl text-center">
+            Search Result:- {properties.length}
+          </h2>
         </div>
       </div>
 
       <section className="py-8">
-        <h2 className="text-5xl text-center">{properties.length}</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-3 gap-8">
-          {sampleProperties.map((property) => (
+          {properties?.map((property) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>
