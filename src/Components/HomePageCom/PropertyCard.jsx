@@ -1,6 +1,6 @@
 const PropertyCard = ({ property }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg capitalize">
+    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg capitalize bg-white">
       <img
         className="w-full h-48 object-cover"
         src={property.image}

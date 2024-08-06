@@ -23,7 +23,7 @@ const AddEditListingPage = () => {
     phone: "",
     whatsApp: "",
     type: "",
-    image: "",
+    images: [],
     amenities: "",
     condition: "",
     email: "",
@@ -119,9 +119,14 @@ const AddEditListingPage = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    if (files.length > 6) {
+      alert("You can upload a maximum of 6 images");
+      return;
+    }
+
     setProperty({
       ...property,
-      image: files[0],
+      images: files,
     });
   };
 
@@ -145,7 +150,9 @@ const AddEditListingPage = () => {
     formData.append("condition", property.condition);
     formData.append("owner", property.owner);
     formData.append("state", property.state);
-    // formData.append("image", property.image);
+    property.images.forEach((image) => {
+      formData.append("images", image);
+    });
 
     try {
       const response = await axios.post(
@@ -226,8 +233,10 @@ const AddEditListingPage = () => {
           <input
             type="file"
             onChange={handleImageChange}
-            name="image"
+            name="images"
             className="p-2 border rounded w-full"
+            multiple
+            accept="image/png, image/jpeg"
           />
         </div>
         <div className="mb-4">
