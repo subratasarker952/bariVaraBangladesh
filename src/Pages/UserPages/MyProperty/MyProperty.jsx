@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import useAuth from "../../../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const MyProperty = () => {
   const { user } = useAuth();
@@ -25,13 +27,26 @@ const MyProperty = () => {
 
     fetchProperties();
   }, [user]);
-
-  const handleEdit = (id) => {
-    console.log("Edit Button Click" + id);
-  };
-
-  const handleDelete = (id) => {
-    console.log("delete Button Click" + id);
+  
+  const handleDelete = (property) => {
+    const sure = window.confirm("Are You Sure? Delete " + property.title);
+    if (sure) {
+      fetch(`http://localhost:3000/properties/${property._id}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          authorization: `barer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            toast.success("Item Deleted");
+          } else if (data.message) {
+            toast.error(data.message);
+          }
+        });
+    }
   };
 
   const handlePay = (id) => {
@@ -61,14 +76,14 @@ const MyProperty = () => {
               <td className="py-2 px-4 border-b">{property.paymentStatus}</td>
               <td className="py-2 px-4 border-b">{property.publishStatus}</td>
               <td className="py-2 px-4 border-b">
-                <button
-                  onClick={() => handleEdit(property._id)}
+                <Link
+                  to={`/dashboard/editProperty/${property._id}`}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
                 >
                   Edit
-                </button>
+                </Link>
                 <button
-                  onClick={() => handleDelete(property._id)}
+                  onClick={() => handleDelete(property)}
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded mr-2"
                 >
                   Delete

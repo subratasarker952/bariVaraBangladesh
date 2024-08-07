@@ -11,11 +11,11 @@ import Profile from "../Pages/UserPages/Profile/Profile";
 import EditProfile from "../Pages/UserPages/Profile/EditProfile";
 import ListingsPage from "../Pages/ListingPage/ListingPage";
 import SinglePropertyPage from "../Components/HomePageCom/SinglePropertyPage";
-import AddEditListingPage from "../Pages/UserPages/AddEditListingPage/AddEditListingPage";
+import AddProperty from "../Pages/UserPages/AddProperty/AddProperty";
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
 import Privacy from "../Pages/Privacy/Privacy";
-import MyProperty from "../Pages/UserPages/AddEditListingPage/MyProperty/MyProperty";
+import MyProperty from "../Pages/UserPages/MyProperty/MyProperty";
 import Terms from "../Pages/terms/Terms";
 
 const router = createBrowserRouter([
@@ -92,15 +92,11 @@ const router = createBrowserRouter([
       },
       {
         path: "addProperty",
-        element: <AddEditListingPage />,
-      },
-      {
-        path: "editProperty",
-        element: <AddEditListingPage />,
+        element: <AddProperty />,
       },
       {
         path: "editProperty/:id",
-        element: <AddEditListingPage />,
+        element: <AddProperty />,
       },
       {
         path: "myProperty",

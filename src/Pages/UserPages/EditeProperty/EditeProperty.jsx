@@ -9,7 +9,7 @@ import {
 import { rentalTypes } from "../../../../public/RentalTypes";
 import axios from "axios";
 
-const AddEditListingPage = () => {
+const EditeProperty = () => {
   const { user } = useAuth();
   const [property, setProperty] = useState({
     title: "",
@@ -448,4 +448,4 @@ const AddEditListingPage = () => {
   );
 };
 
-export default AddEditListingPage;
+export default EditeProperty;
