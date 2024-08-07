@@ -41,21 +41,21 @@ const SinglePropertyPage = () => {
       <p className="text-lg font-bold mb-4">${property.price}/month</p>
 
       <div className="grid grid-cols-3 gap-4 mb-8">
-        {/* {property.images.map((image, index) => (
+        {property?.images?.map((image, index) => (
           <img
             key={index}
             src={image}
             alt={property.title}
             className="w-full h-64 object-cover rounded"
           />
-        ))} */}
+        ))}
       </div>
 
       <p className="text-gray-700 mb-8">{property.description}</p>
 
       <h2 className="text-2xl font-bold mb-4">Amenities</h2>
       <ul className="list-disc list-inside mb-8">
-        {property.amenities?.map((amenity, index) => (
+        {property?.amenities?.map((amenity, index) => (
           <li key={index}>{amenity} </li>
         ))}
       </ul>

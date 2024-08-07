@@ -23,7 +23,7 @@ const AddEditListingPage = () => {
     phone: "",
     whatsApp: "",
     type: "",
-    images: [],
+    images: ["img1","img2"],
     amenities: "",
     condition: "",
     email: "",
@@ -117,47 +117,44 @@ const AddEditListingPage = () => {
     });
   };
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 6) {
-      alert("You can upload a maximum of 6 images");
-      return;
+  const handleImageChange = async (e) => {
+    const files = e.target.files;
+    const formData = new FormData();
+
+    for (let i = 0; i < files?.length; i++) {
+      formData.append('images', files[i]);
+    }
+ 
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/imageUpload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+ setProperty({
+      ...property,
+      images: response.data,
+    });
+     
+    } catch (error) {
+      console.error("Error submitting form", error);
+      alert("Failed to create property");
     }
 
-    setProperty({
-      ...property,
-      images: files,
-    });
+   
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", property.title);
-    formData.append("description", property.description);
-    formData.append("price", property.price);
-    formData.append("division", property.division);
-    formData.append("district", property.district);
-    formData.append("upazila", property.upazila);
-    formData.append("postOffice", property.postOffice);
-    formData.append("amenities", property.amenities);
-    formData.append("type", property.type);
-    formData.append("paymentStatus", property.paymentStatus);
-    formData.append("publishStatus", property.publishStatus);
-    formData.append("phone", property.phone);
-    formData.append("whatsApp", property.whatsApp);
-    formData.append("email", property.email);
-    formData.append("condition", property.condition);
-    formData.append("owner", property.owner);
-    formData.append("state", property.state);
-    property.images.forEach((image) => {
-      formData.append("images", image);
-    });
 
     try {
       const response = await axios.post(
         "http://localhost:3000/properties",
-        formData,
+        property,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -195,7 +192,7 @@ const AddEditListingPage = () => {
             required
             value={property.title}
             onChange={handleChange}
-            className="p-2 border rounded w-full"
+            className="p-2 border rounded capitalize w-full"
           />
         </div>
         <div className="mb-4">
@@ -233,7 +230,6 @@ const AddEditListingPage = () => {
           <input
             type="file"
             onChange={handleImageChange}
-            name="images"
             className="p-2 border rounded w-full"
             multiple
             accept="image/png, image/jpeg"

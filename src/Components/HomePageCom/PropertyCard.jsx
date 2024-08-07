@@ -3,7 +3,7 @@ const PropertyCard = ({ property }) => {
     <div className="max-w-sm rounded-lg overflow-hidden shadow-lg capitalize bg-white">
       <img
         className="w-full h-48 object-cover"
-        src={property.image}
+        src={property.images[0]}
         alt={property.title}
       />
       <div className="px-6 py-4">

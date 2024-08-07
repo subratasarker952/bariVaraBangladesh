@@ -5,15 +5,15 @@ const DemoComponent = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const images = form.image.files;
+    const image = form.files[0];
     // console.log(name, images);
     const formData = new FormData();
     formData.append("name", name);
-    formData.append(`images`, images);
+    formData.append(`images`, image);
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/upload",
+        "http://localhost:3000/imageUpload",
         formData
       );
 
@@ -34,7 +34,6 @@ const DemoComponent = () => {
           <input
             type="file"
             className="form-control-file"
-            multiple
             name="image"
           />
           <input

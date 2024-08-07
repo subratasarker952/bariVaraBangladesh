@@ -244,7 +244,7 @@ const ListingsPage = () => {
       <section className="py-8">
         <div className="max-w-6xl mx-auto grid grid-cols-3 gap-8">
           {properties?.map((property) => (
-            <PropertyCard key={property.id} property={property} />
+            <PropertyCard key={property._id} property={property} />
           ))}
         </div>
       </section>
