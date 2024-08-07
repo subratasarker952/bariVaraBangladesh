@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 import {
   divisionsData,
   districtsData,
@@ -8,29 +7,11 @@ import {
 } from "../../../../public/bangladeshAddress";
 import { rentalTypes } from "../../../../public/RentalTypes";
 import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
 const EditeProperty = () => {
-  const { user } = useAuth();
-  const [property, setProperty] = useState({
-    title: "",
-    description: "",
-    price: "",
-    division: "",
-    district: "",
-    upazila: "",
-    postOffice: "",
-    state: "",
-    phone: "",
-    whatsApp: "",
-    type: "",
-    images: ["img1","img2"],
-    amenities: "",
-    condition: "",
-    email: "",
-    paymentStatus: "due",
-    publishStatus: "hide",
-    owner: user?.email || "",
-  });
+  const loaderData = useLoaderData();
+  const [property, setProperty] = useState(loaderData);
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
@@ -122,9 +103,8 @@ const EditeProperty = () => {
     const formData = new FormData();
 
     for (let i = 0; i < files?.length; i++) {
-      formData.append('images', files[i]);
+      formData.append("images", files[i]);
     }
- 
 
     try {
       const response = await axios.post(
@@ -136,46 +116,48 @@ const EditeProperty = () => {
           },
         }
       );
- setProperty({
-      ...property,
-      images: response.data,
-    });
-     
+      setProperty({
+        ...property,
+        images: response.data,
+      });
     } catch (error) {
       console.error("Error submitting form", error);
       alert("Failed to create property");
     }
-
-   
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const sure = window.confirm("Are you sure Update Product information?");
+    if (sure) {
+      try {
+        const response = await axios.patch(
+          `http://localhost:3000/properties/${loaderData._id}`,
+          property,
+          {
+            method: "PATCH",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/properties",
-        property,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+        if (response.status === 201) {
+          alert("Property update successfully");
+        } else {
+          alert("Failed to update property");
         }
-      );
-
-      if (response.status === 201) {
-        alert("Property created successfully");
-      } else {
-        alert("Failed to create property");
+      } catch (error) {
+        console.error("Error submitting form", error);
+        alert("Failed to update property");
       }
-    } catch (error) {
-      console.error("Error submitting form", error);
-      alert("Failed to create property");
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto  py-8">
-      <h2 className="text-3xl font-bold mb-8 text-center">Add New Property</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center">
+        Edit Your Property
+      </h2>
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
@@ -441,7 +423,7 @@ const EditeProperty = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 w-full py-2 rounded"
         >
-          Submit
+          Update
         </button>
       </form>
     </div>

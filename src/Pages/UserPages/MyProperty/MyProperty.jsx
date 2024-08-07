@@ -27,7 +27,7 @@ const MyProperty = () => {
 
     fetchProperties();
   }, [user]);
-  
+
   const handleDelete = (property) => {
     const sure = window.confirm("Are You Sure? Delete " + property.title);
     if (sure) {
@@ -50,7 +50,7 @@ const MyProperty = () => {
   };
 
   const handlePay = (id) => {
-    console.log("Pay Button Click" + id);
+    console.log(id)
   };
 
   return (

@@ -17,6 +17,10 @@ import Contact from "../Pages/Contact/Contact";
 import Privacy from "../Pages/Privacy/Privacy";
 import MyProperty from "../Pages/UserPages/MyProperty/MyProperty";
 import Terms from "../Pages/terms/Terms";
+import EditeProperty from "../Pages/UserPages/EditeProperty/EditeProperty";
+import PaymentCancel from "../Pages/Payment/PaymentCancel";
+import PaymentFail from "../Pages/Payment/PaymentFail";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +64,18 @@ const router = createBrowserRouter([
         element: <Terms />,
       },
       {
+        path: "/paymentSuccess",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/paymentCancel",
+        element: <PaymentCancel />,
+      },
+      {
+        path: "/paymentFail",
+        element: <PaymentFail />,
+      },
+      {
         path: "*",
         element: <ErrorPage />,
       },
@@ -96,7 +112,11 @@ const router = createBrowserRouter([
       },
       {
         path: "editProperty/:id",
-        element: <AddProperty />,
+        element: <EditeProperty />,
+        loader: ({ params }) =>
+          fetch(
+            `http://localhost:3000/properties/${params.id}`
+          ),
       },
       {
         path: "myProperty",
