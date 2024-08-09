@@ -1,28 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-const SinglePropertyPage = () => {
-  const { id } = useParams();
-  const [property, setProperty] = useState({});
-  useEffect(() => {
-    const fetchProperty = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/properties/${id}`,
-          {
-            headers: {
-              authorization: `barer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setProperty(response.data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
-    };
+import { useLoaderData } from "react-router-dom";
 
-    fetchProperty();
-  }, [id]);
+const SinglePropertyPage = () => {
+const property =useLoaderData()
 
   return (
     <div className="max-w-6xl mx-auto py-8 capitalize">

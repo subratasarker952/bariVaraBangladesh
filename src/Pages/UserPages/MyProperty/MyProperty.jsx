@@ -9,24 +9,14 @@ const MyProperty = () => {
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/properties/email?email=${user?.email}`,
-          {
-            headers: {
-              authorization: `barer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setProperties(response.data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
-    };
-
-    fetchProperties();
-  }, [user]);
+    axios
+      .get(`http://localhost:3000/properties/email?email=${user?.email}`, {
+        headers: {
+          authorization: `barer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => setProperties(response.data));
+  }, [user, properties]);
 
   const handleDelete = (property) => {
     const sure = window.confirm("Are You Sure? Delete " + property.title);
@@ -50,7 +40,23 @@ const MyProperty = () => {
   };
 
   const handlePay = (id) => {
-    console.log(id)
+    const patchField = {
+      paymentStatus: "due",
+      publishStatus: "hide",
+      amount: 50,
+    };
+    axios
+      .patch(
+        `http://localhost:3000/payment/${id}?email=${user?.email}`,
+        patchField
+      )
+      .then((res) => {
+        window.location.replace(res.data.url);
+
+        // if (res.data.modifiedCount) {
+        //     refetchOrders()
+        // }
+      });
   };
 
   return (

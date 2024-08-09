@@ -47,7 +47,7 @@ const UserLayout = () => {
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
           <div className="w-full navbar bg-base-300">
-            <div className="flex-none lg:hidden bg-white p-2">
+            <div className="flex-none lg:hidden bg-white p-2 print:hidden">
               <label
                 htmlFor="my-drawer-3"
                 aria-label="open sidebar"

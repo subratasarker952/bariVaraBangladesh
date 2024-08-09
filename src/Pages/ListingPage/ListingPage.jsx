@@ -10,7 +10,8 @@ import { rentalTypes } from "../../../public/RentalTypes";
 import axios from "axios";
 
 const ListingsPage = () => {
-  const [properties, setProperties] = useState([]);
+  const [allProperties, setAllProperties] = useState([]);
+  const [publishProperties, setPublishProperties] = useState([]);
   const [filters, setFilters] = useState({
     division: "",
     district: "",
@@ -19,21 +20,24 @@ const ListingsPage = () => {
     type: "",
   });
 
-  const fetchProperties = async () => {
+  const fetchAllProperties = async () => {
     try {
       const response = await axios.get("http://localhost:3000/properties", {
         params: filters,
       });
-      setProperties(response.data);
+      setAllProperties(response.data);
     } catch (error) {
       console.error("Error fetching properties:", error);
     }
   };
 
   useEffect(() => {
-    fetchProperties();
-  }, [filters]);
-
+    fetchAllProperties();
+    const publishProperties = allProperties.filter(
+      (property) => property.publishStatus == "public"
+    );
+    setPublishProperties(publishProperties);
+  }, [filters, allProperties]);
 
   const [divisions, setDivisions] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -236,14 +240,14 @@ const ListingsPage = () => {
             </div>
           </div>
           <h2 className="text-2xl text-center">
-            Search Result:- {properties.length}
+            Search Result:- {publishProperties.length}
           </h2>
         </div>
       </div>
 
       <section className="py-8">
         <div className="max-w-6xl mx-auto grid grid-cols-3 gap-8">
-          {properties?.map((property) => (
+          {publishProperties?.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}
         </div>

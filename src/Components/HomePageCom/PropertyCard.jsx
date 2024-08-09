@@ -26,7 +26,7 @@ const PropertyCard = ({ property }) => {
       <div className="px-6 py-4 flex justify-between items-center">
         <span className="font-bold text-lg">${property.price}/month</span>
         <a
-          href={`/property/${property._id}`}
+          href={`/properties/${property._id}`}
           className="text-blue-500 hover:underline"
         >
           View Details

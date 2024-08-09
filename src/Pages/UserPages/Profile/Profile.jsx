@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Profile = () => {
-  const { user, passwordReset,userInDb, setUserInDb } = useAuth();
+  const { user, userLoading, passwordReset, userInDb, setUserInDb } = useAuth();
   const [disabled, setDisabled] = useState(false);
   useEffect(() => {
     fetch(`https://digitalfurnitureserver.vercel.app/users/${user?.email}`)
       .then((response) => response.json())
       .then((json) => setUserInDb(json));
   }, [user, setUserInDb]);
+  if (userLoading) <h2>Loading</h2>;
+
   const handlePasswordReset = () => {
     const sure = window.confirm("Are You Sure? Change Your Password?");
     if (sure) {
@@ -28,7 +30,7 @@ const Profile = () => {
     <div className="">
       <div className="text-center my-5">
         <div className=" md:flex  ">
-          <div className="flex-1" >
+          <div className="flex-1">
             {userInDb?.img && (
               <img
                 className="h-[200px] w-[200px] mx-auto"
@@ -38,16 +40,14 @@ const Profile = () => {
             )}
           </div>
           <div className="flex-1 flex justify-center items-center text-xl">
-            <div> 
-            <p>Email:- {userInDb?.email}</p>
-            {userInDb?.displayName && (
-              <p>Name:- {userInDb?.displayName}</p>
-            )}
-            {userInDb?.age && <p>age:- {userInDb?.age} Years</p>}
-            {userInDb?.role && <p>Role:- {userInDb?.role}</p>}
-            {userInDb?.description && (
-              <p>about your self:- {userInDb?.description}</p>
-            )}
+            <div>
+              <p>Email:- {userInDb?.email}</p>
+              {userInDb?.displayName && <p>Name:- {userInDb?.displayName}</p>}
+              {userInDb?.age && <p>age:- {userInDb?.age} Years</p>}
+              {userInDb?.role && <p>Role:- {userInDb?.role}</p>}
+              {userInDb?.description && (
+                <p>about your self:- {userInDb?.description}</p>
+              )}
             </div>
           </div>
         </div>
